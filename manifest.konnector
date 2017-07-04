@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "name": "Mastodon Home",
+  "type": "node",
+  "slug": "mastodonhome",
+  "description": "Get the statuses from your mastodon home",
+  "source": "git://github.com/cozy/cozy-konnector-mastodon.git",
+  "permissions": {
+    "Mastodon Status": {
+      "description": "Required to save your mastodon home",
+      "type": "io.cozy.mastodonstatuses"
+    },
+    "files": {
+      "description": "Required to save files",
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "description": "Required to get the account's data",
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "cozy",
+    "url": "cozy.io"
+  }
+}
