@@ -6,7 +6,7 @@
   "author": "doubleface",
   "license": "MIT",
   "dependencies": {
-    "cozy-konnector-libs": "^2.4.5",
+    "cozy-konnector-libs": "^3.0.0-alpha.2",
     "request": "^2.81.0",
     "request-debug": "^0.2.0",
     "request-promise": "^4.2.1"
