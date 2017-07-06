@@ -1,15 +1,14 @@
-const { BaseKonnector, log, filterData, addData } = require('cozy-konnector-libs')
-let request = require('request-promise')
-// require('request-debug')(request)
+const { BaseKonnector, log, filterData, addData, request } = require('cozy-konnector-libs')
 
 const DOCTYPE = 'io.cozy.mastodonstatuses'
+
+const rq = request()
 
 module.exports = new BaseKonnector(function (fields) {
   // first get the access token
   const {client_id, client_secret, username, password} = fields
-  return request({
+  return rq({
     method: 'POST',
-    json: true,
     uri: `${fields.url}/oauth/token`,
     form: { client_id, client_secret, username, password, grant_type: 'password' }
   })
@@ -17,14 +16,13 @@ module.exports = new BaseKonnector(function (fields) {
     const { lastTootId } = this.getAccountData()
     log('debug', lastTootId, 'got this last toot id from account data')
 
-    return request({
+    return rq({
       headers: {
         'Authorization': `Bearer ${body.access_token}`
       },
       qs: {
         since_id: lastTootId
       },
-      json: true,
       uri: `${fields.url}/api/v1/timelines/home`
     })
   })
