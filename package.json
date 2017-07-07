@@ -6,7 +6,7 @@
   "author": "doubleface",
   "license": "MIT",
   "dependencies": {
-    "cozy-konnector-libs": "^3.0.0-alpha.4"
+    "cozy-konnector-libs": "^3.0.0-alpha.5"
   },
   "scripts": {
     "standalone": "cozy-konnector-standalone",
