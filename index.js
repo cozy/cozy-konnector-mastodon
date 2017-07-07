@@ -6,12 +6,38 @@ const rq = request()
 
 module.exports = new BaseKonnector(function (fields) {
   // first get the access token
-  log('info', 'Getting the access token')
-  const {client_id, client_secret, username, password} = fields
-  return rq({
-    method: 'POST',
-    uri: `${fields.url}/oauth/token`,
-    form: { client_id, client_secret, username, password, grant_type: 'password' }
+  const {username, password} = fields
+
+  return Promise.resolve(this.getAccountData())
+  .then(data => {
+    if (!data.client_id) {
+      log('info', 'Registering the connector as an application to the mastodon server')
+      return rq({
+        method: 'POST',
+        uri: `${fields.url}/api/v1/apps`,
+        form: {
+          client_name: 'cozy-konnector-mastodon',
+          redirect_uris: 'urn:ietf:wg:oauth:2.0:oob'
+        }
+      })
+      .then(newclient => {
+        log('info', 'Saving client ids and secrets for next time')
+        const {client_id, client_secret} = newclient
+        Object.assign(data, {client_id, client_secret})
+        this.saveAccountData(data)
+        return data
+      })
+    }
+    return data
+  })
+  .then(data => {
+    log('info', 'Getting the access token')
+    const {client_id, client_secret} = data
+    return rq({
+      method: 'POST',
+      uri: `${fields.url}/oauth/token`,
+      form: { client_id, client_secret, username, password, grant_type: 'password' }
+    })
   })
   .then(body => {
     log('info', 'Getting the list of toots')
