@@ -6,10 +6,13 @@
   "author": "doubleface",
   "license": "MIT",
   "dependencies": {
-    "cozy-konnector-libs": "^3.0.0-alpha.5"
+    "cozy-konnector-libs": "4.1.5"
   },
   "scripts": {
-    "standalone": "cozy-konnector-standalone",
-    "dev": "cozy-konnector-dev"
+    "standalone": "cozy-run-standalone",
+    "dev": "cozy-run-dev"
+  },
+  "devDependencies": {
+    "cozy-jobs-cli": "1.0.15"
   }
 }
